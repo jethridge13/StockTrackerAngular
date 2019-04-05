@@ -1,0 +1,10 @@
+<button mat-mini-fab id="account" (click)="manageAccount()">
+    <i class="material-icons">account_box</i>
+</button>
+<label *ngIf="afAuth.user | async as user; else showLogin" for="account">
+	Account
+</label>
+
+<ng-template #showLogin>
+	<label for="account">Log In</label>
+</ng-template>
