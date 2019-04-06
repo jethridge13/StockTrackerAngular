@@ -1,8 +1,8 @@
-<button mat-button [matMenuTriggerFor]="menu" *ngIf="afAuth.user | async as user; else showLogin">Account</button>
+<button mat-stroked-button [matMenuTriggerFor]="menu" *ngIf="afAuth.user | async as user; else showLogin">Account</button>
 <mat-menu #menu="matMenu">
 	<button mat-menu-item (click)="logout()">Log Out</button>
 </mat-menu>
 
 <ng-template #showLogin>
-	<button mat-button (click)="login()">Log In</button>
+	<button mat-stroked-button (click)="login()">Log In</button>
 </ng-template>
