@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { auth } from 'firebase/app';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-account',
@@ -9,9 +10,18 @@ import { auth } from 'firebase/app';
 })
 export class AccountComponent implements OnInit {
 
-  constructor(public afAuth: AngularFireAuth) { }
+  displayName = '';
+
+  constructor(public afAuth: AngularFireAuth) {}
 
   ngOnInit() {
+      this.afAuth.authState.subscribe((data) => {
+          if (data) {
+              this.displayName = data.displayName;
+          } else {
+              this.displayName = '';
+          }
+      });
   }
 
   login() {
@@ -20,11 +30,6 @@ export class AccountComponent implements OnInit {
 
   logout() {
     this.afAuth.auth.signOut();
-  }
-
-  manageAccount() {
-      // TODO Add more logic to this
-      this.login();
   }
 
 }
