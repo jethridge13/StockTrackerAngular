@@ -11,6 +11,7 @@ import { Observable } from 'rxjs';
 export class AccountComponent implements OnInit {
 
   displayName = '';
+  showLoginMenu = false;
 
   constructor(public afAuth: AngularFireAuth) {}
 
@@ -22,6 +23,10 @@ export class AccountComponent implements OnInit {
               this.displayName = '';
           }
       });
+  }
+
+  signInWithGoogle() {
+    this.afAuth.auth.signInWithPopup(new auth.GoogleAuthProvider());  
   }
 
   login() {
