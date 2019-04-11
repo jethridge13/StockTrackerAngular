@@ -13,6 +13,7 @@ export class AccountComponent implements OnInit {
   displayName = '';
   showLoginMenu = false;
   showCreateAccountMenu = false;
+  loading = false;
 
   constructor(public afAuth: AngularFireAuth) {}
 
@@ -32,12 +33,13 @@ export class AccountComponent implements OnInit {
   }
 
   signInWithGoogle() {
-    this.afAuth.auth.signInWithPopup(new auth.GoogleAuthProvider());
-  }
-
-  loginClick() {
-      this.showLoginMenu = !this.showLoginMenu;
-      this.showCreateAccountMenu = false;
+      this.loading = true;
+    const login = this.afAuth.auth.signInWithPopup(new auth.GoogleAuthProvider());
+    login.then((value) => {
+        console.log(value);
+        this.loading = false;
+        this.showLoginMenu = false;
+    });
   }
 
   login() {

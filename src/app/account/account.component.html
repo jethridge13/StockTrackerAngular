@@ -1,10 +1,12 @@
+<button mat-flat-button *ngIf="!(afAuth.user | async)"
+(click)="showCreateAccountMenu = !showCreateAccountMenu">Sign Up</button>
 <button mat-stroked-button [matMenuTriggerFor]="menu" *ngIf="afAuth.user | async as user; else showLogin">Account</button>
 <mat-menu #menu="matMenu">
 	<button mat-menu-item (click)="logout()">Log Out</button>
 </mat-menu>
 
 <mat-card *ngIf="showLoginMenu" id="showLoginMenu">
-	<mat-list>
+	<mat-list *ngIf="!loading">
 		<mat-list-item>
 			<mat-form-field>
 				<input matInput placeholder="Email">
@@ -25,17 +27,10 @@
 				Sign in with Google
 			</button>
 		</mat-list-item>
-		<mat-list-item>
-			<mat-divider></mat-divider>
-		</mat-list-item>
-		<mat-list-item>
-			<button mat-raised-button (click)="showCreateAccount()">
-				Create your account
-			</button>
-		</mat-list-item>
 	</mat-list>
+	<mat-spinner *ngIf="loading"></mat-spinner>
 </mat-card>
 
 <ng-template #showLogin>
-	<button mat-stroked-button (click)="loginClick()">Log In</button>
+	<button mat-stroked-button (click)="showLoginMenu = !showLoginMenu">Log In</button>
 </ng-template>
