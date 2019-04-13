@@ -4,6 +4,13 @@ button {
 	margin: 0 4px;
 }
 
+mat-card {
+	color: black;
+	position: absolute;
+	transform: translate(-155px, 5px);
+	width: 300px;
+}
+
 mat-form-field {
 	width: 100%;
 }
@@ -21,9 +28,6 @@ mat-spinner {
 	width: 100%;
 }
 
-#showLoginMenu {
-	color: black;
-	position: absolute;
-	transform: translate(-155px, 5px);
-	width: 300px;
+/deep/ .mat-checkbox-label, .mat-checkbox-layout {
+	white-space: normal !important;
 }

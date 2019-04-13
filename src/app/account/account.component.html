@@ -1,5 +1,5 @@
 <button mat-flat-button *ngIf="!(afAuth.user | async)"
-(click)="showCreateAccountMenu = !showCreateAccountMenu">Sign Up</button>
+(click)="showCreateAccountMenu = !showCreateAccountMenu; showLoginMenu = false">Sign Up</button>
 <button mat-stroked-button [matMenuTriggerFor]="menu" *ngIf="afAuth.user | async as user; else showLogin">Account</button>
 <mat-menu #menu="matMenu">
 	<button mat-menu-item (click)="logout()">Log Out</button>
@@ -31,6 +31,37 @@
 	<mat-spinner *ngIf="loading"></mat-spinner>
 </mat-card>
 
+<mat-card *ngIf="showCreateAccountMenu" id="showCreateAccountMenu">
+	<mat-list *ngIf="!loading">
+		<mat-list-item>
+			<mat-form-field [hideRequiredMarker]="true">
+				<input matInput required placeholder="Email">
+			</mat-form-field>
+		</mat-list-item>
+		<mat-list-item>
+			<mat-form-field [hideRequiredMarker]="true">
+				<input matInput required placeholder="Password" [type]="hide ? 'password' : 'text'">
+				<mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibilty_off' : 'visibility'}}</mat-icon>
+			</mat-form-field>
+		</mat-list-item>
+		<mat-list-item>
+			<mat-form-field [hideRequiredMarker]="true">
+				<input matInput required placeholder="Confirm Password" [type]="hide ? 'password' : 'text'">
+				<mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibilty_off' : 'visibility'}}</mat-icon>
+			</mat-form-field>
+		</mat-list-item>
+		<mat-list-item>
+			<mat-checkbox matLine>
+				I have read and agreed to the Terms of Service and Privacy Policy.
+			</mat-checkbox>
+		</mat-list-item>
+		<mat-list-item>
+			<button mat-raised-button>Create account</button>
+		</mat-list-item>
+	</mat-list>
+	<mat-spinner *ngIf="loading"></mat-spinner>
+</mat-card>
+
 <ng-template #showLogin>
-	<button mat-stroked-button (click)="showLoginMenu = !showLoginMenu">Log In</button>
+	<button mat-stroked-button (click)="showLoginMenu = !showLoginMenu; showCreateAccountMenu = false">Log In</button>
 </ng-template>
