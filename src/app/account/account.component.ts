@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { auth } from 'firebase/app';
 import { Observable } from 'rxjs';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators, ValidatorFn } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl,
+    FormGroup, Validators, ValidationErrors, ValidatorFn } from '@angular/forms';
 
 @Component({
   selector: 'app-account',
@@ -21,7 +22,7 @@ export class AccountComponent implements OnInit {
       passwordGroup: new FormGroup({
           password: new FormControl('', [Validators.required]),
           passwordConfirm: new FormControl('', [Validators.required])
-      }, [this.checkPasswords]),
+      }, [this.checkPasswords()]),
       legalCheck: new FormControl('', [Validators.requiredTrue])
   });
 
@@ -37,20 +38,26 @@ export class AccountComponent implements OnInit {
       });
   }
 
-  checkPasswords(group: FormGroup): ValidatorFn {
-      const pass = group.controls.password.value;
-      const confirm = group.controls.passwordConfirm.value;
+  checkPasswords(): ValidatorFn {
+      return (group: FormGroup): ValidationErrors => {
+          const password = group.get('password');
+          const confirm = group.get('passwordConfirm');
 
-      return (control: AbstractControl): {[key: string]: any} | null => {
-          return pass === confirm ? null : {'notMatching': true};
+          if (password.value !== confirm.value) {
+              return {notEquivalent: true};
+          } else {
+              return null;
+          }
       };
   }
 
   createAccount() {
+      // TODO
       console.log(this.createAccountForm.value);
   }
 
-  showCreateAccount() {
+  showCreateAccount(form) {
+      console.log(form);
       this.showLoginMenu = false;
       this.showCreateAccountMenu = true;
   }
@@ -73,11 +80,23 @@ export class AccountComponent implements OnInit {
     this.afAuth.auth.signOut();
   }
 
-  getErrorMessage() {
-      if (this.createAccountForm.get('email').hasError('required')) {
-          return 'Required';
-      } else if (this.createAccountForm.get('email').hasError('email')) {
-          return 'Not a valid email';
+  getErrorMessage(type: string) {
+      if (type === 'email') {
+          if (this.createAccountForm.get('email').hasError('required')) {
+              return 'Required';
+          } else if (this.createAccountForm.get('email').hasError('email')) {
+              return 'Not a valid email';
+          }
+      } else if (type === 'password') {
+          if (this.createAccountForm.get('passwordGroup').get('password').hasError('required')) {
+              return 'Required';
+          }
+      } else if (type === 'passwordConfirm') {
+          if (this.createAccountForm.get('passwordGroup').get('passwordConfirm').hasError('required')) {
+              return 'Required';
+          } else if (this.createAccountForm.get('passwordGroup').hasError('notEquivalent')) {
+              return 'Passwords must match';
+          }
       }
   }
 
