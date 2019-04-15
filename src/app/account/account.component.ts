@@ -52,8 +52,17 @@ export class AccountComponent implements OnInit {
   }
 
   createAccount() {
-      // TODO
-      console.log(this.createAccountForm.value);
+      this.loading = true;
+      const form = this.createAccountForm.value;
+      this.afAuth.auth.createUserWithEmailAndPassword(form.email, form.passwordGroup.password)
+      .then((value) => {
+          console.log(value);
+          this.loading = false;
+      })
+      .catch((value) => {
+          console.log(value);
+          this.loading = false;
+      });
   }
 
   showCreateAccount(form) {
@@ -63,7 +72,7 @@ export class AccountComponent implements OnInit {
   }
 
   signInWithGoogle() {
-      this.loading = true;
+    this.loading = true;
     const login = this.afAuth.auth.signInWithPopup(new auth.GoogleAuthProvider());
     login.then((value) => {
         console.log(value);
