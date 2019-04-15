@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { auth } from 'firebase/app';
 import { Observable } from 'rxjs';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators, ValidatorFn } from '@angular/forms';
 
 @Component({
   selector: 'app-account',
@@ -15,6 +16,15 @@ export class AccountComponent implements OnInit {
   showCreateAccountMenu = false;
   loading = false;
 
+  createAccountForm = new FormGroup({
+      email: new FormControl('', [Validators.required, Validators.email]),
+      passwordGroup: new FormGroup({
+          password: new FormControl('', [Validators.required]),
+          passwordConfirm: new FormControl('', [Validators.required])
+      }, [this.checkPasswords]),
+      legalCheck: new FormControl('', [Validators.requiredTrue])
+  });
+
   constructor(public afAuth: AngularFireAuth) {}
 
   ngOnInit() {
@@ -25,6 +35,19 @@ export class AccountComponent implements OnInit {
               this.displayName = '';
           }
       });
+  }
+
+  checkPasswords(group: FormGroup): ValidatorFn {
+      const pass = group.controls.password.value;
+      const confirm = group.controls.passwordConfirm.value;
+
+      return (control: AbstractControl): {[key: string]: any} | null => {
+          return pass === confirm ? null : {'notMatching': true};
+      };
+  }
+
+  createAccount() {
+      console.log(this.createAccountForm.value);
   }
 
   showCreateAccount() {
@@ -48,6 +71,14 @@ export class AccountComponent implements OnInit {
 
   logout() {
     this.afAuth.auth.signOut();
+  }
+
+  getErrorMessage() {
+      if (this.createAccountForm.get('email').hasError('required')) {
+          return 'Required';
+      } else if (this.createAccountForm.get('email').hasError('email')) {
+          return 'Not a valid email';
+      }
   }
 
 }

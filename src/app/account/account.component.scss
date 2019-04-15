@@ -11,8 +11,16 @@ mat-card {
 	width: 300px;
 }
 
+mat-checkbox {
+	font-size: 0.9rem !important;
+}
+
 mat-form-field {
 	width: 100%;
+}
+
+mat-list-item {
+	height: 60px !important;
 }
 
 mat-spinner {

@@ -12,6 +12,8 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 import { MaterialsModule } from './materials/materials.module';
 import { AccountComponent } from './account/account.component';
 
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -22,6 +24,8 @@ import { AccountComponent } from './account/account.component';
     AppRoutingModule,
     BrowserAnimationsModule,
     MaterialsModule,
+    FormsModule,
+    ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule
   ],
