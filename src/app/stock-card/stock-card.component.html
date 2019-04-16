@@ -1,3 +1,10 @@
-<p>
-  stock-card works!
-</p>
+<mat-card>
+	<mat-card-header>
+		<mat-card-title>{{ title }}</mat-card-title>
+		<mat-card-subtitle>{{ subtitle }}</mat-card-subtitle>
+	</mat-card-header>
+	<mat-card-actions>
+		<button mat-stroked-button>Edit</button>
+		<button mat-stroked-button color="warn" class="delete" (click)="showDeletePrompt()">Delete</button>
+	</mat-card-actions>
+</mat-card>
