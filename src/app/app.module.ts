@@ -13,11 +13,13 @@ import { MaterialsModule } from './materials/materials.module';
 import { AccountComponent } from './account/account.component';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { StockCardComponent } from './stock-card/stock-card.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    AccountComponent
+    AccountComponent,
+    StockCardComponent
   ],
   imports: [
     BrowserModule,
