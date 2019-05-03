@@ -10,6 +10,7 @@ export class StockCardComponent implements OnInit {
   @Input() title = '';
   @Input() subtitle = '';
 
+  settings = true;
   showDelete = false;
 
   constructor() { }

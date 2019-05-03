@@ -4,6 +4,14 @@ mat-card {
 	min-width: 300px
 }
 
+mat-list-item {
+	height: 68px !important;
+}
+
+.create {
+	color: #2c9803;
+}
+
 .delete {
 	float: right;
 }
