@@ -13,10 +13,29 @@ export class StockCardComponent implements OnInit {
   settings = true;
   showDelete = false;
   cardName = 'New Stock Card';
+  symbols = [
+    {'symbol': ''}
+  ];
 
   constructor() { }
 
   ngOnInit() {
+  }
+
+  addLine(): void {
+    this.symbols.push({'symbol': ''});
+  }
+
+  handleDelete(event: MouseEvent): void {
+    let index = (<HTMLElement>event.target).getAttribute('data-index');
+    if (!index) {
+      index = (<HTMLElement>event.target).parentElement.getAttribute('data-index');
+    }
+    this.deleteLine(index);
+  }
+
+  deleteLine(index): void {
+    this.symbols.splice(index, 1);
   }
 
   showDeletePrompt(): void {
