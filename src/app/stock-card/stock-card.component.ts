@@ -12,6 +12,7 @@ export class StockCardComponent implements OnInit {
 
   settings = true;
   showDelete = false;
+  cardName = 'New Stock Card';
 
   constructor() { }
 
@@ -20,6 +21,14 @@ export class StockCardComponent implements OnInit {
 
   showDeletePrompt(): void {
     this.showDelete = true;
+  }
+
+  updateTitle(event: KeyboardEvent): void {
+    let value = (<HTMLInputElement>event.target).value;
+    if (value === '') {
+      value = 'New Stock Card';
+    }
+    this.cardName = value;
   }
 
 }
