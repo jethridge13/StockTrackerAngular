@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-stock-card',
@@ -12,14 +13,25 @@ export class StockCardComponent implements OnInit {
 
   settings = true;
   showDelete = false;
+  loading = false;
   cardName = 'New Stock Card';
   symbols = [
     {'symbol': ''}
   ];
 
+  createStockCardForm = new FormGroup({
+    name: new FormControl()
+  });
+
   constructor() { }
 
   ngOnInit() {
+  }
+
+  createCard(): void {
+    this.loading = true;
+    this.settings = false;
+    const form = this.createStockCardForm.value;
   }
 
   addLine(): void {
