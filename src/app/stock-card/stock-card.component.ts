@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-stock-card',
@@ -19,23 +19,37 @@ export class StockCardComponent implements OnInit {
     {'symbol': ''}
   ];
 
-  createStockCardForm = new FormGroup({
-    name: new FormControl()
-  });
+  stockCardForm: FormGroup;
+  stocks: FormArray;
 
-  constructor() { }
+  constructor(private fb: FormBuilder) { }
 
   ngOnInit() {
+    this.stockCardForm = this.fb.group({
+      cardName: '',
+      stocks: this.fb.array([this.createStock()])
+    });
   }
 
   createCard(): void {
     this.loading = true;
     this.settings = false;
-    const form = this.createStockCardForm.value;
+    const form = this.stockCardForm.value;
+  }
+
+  addStock(): void {
+    this.stocks = this.stockCardForm.get('stocks') as FormArray;
+    this.stocks.push(this.createStock());
+  }
+
+  createStock(): FormGroup {
+    return this.fb.group({
+      symbol: ''
+    });
   }
 
   addLine(): void {
-    this.symbols.push({'symbol': ''});
+    this.addStock();
   }
 
   handleDelete(event: MouseEvent): void {
