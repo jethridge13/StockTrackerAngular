@@ -15,9 +15,6 @@ export class StockCardComponent implements OnInit {
   showDelete = false;
   loading = false;
   cardName = 'New Stock Card';
-  symbols = [
-    {'symbol': ''}
-  ];
 
   stockCardForm: FormGroup;
   stocks: FormArray;
@@ -61,7 +58,8 @@ export class StockCardComponent implements OnInit {
   }
 
   deleteLine(index): void {
-    this.symbols.splice(index, 1);
+    this.stocks = this.stockCardForm.get('stocks') as FormArray;
+    this.stocks.removeAt(index);
   }
 
   showDeletePrompt(): void {
