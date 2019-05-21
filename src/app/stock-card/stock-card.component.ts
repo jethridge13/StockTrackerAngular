@@ -8,13 +8,12 @@ import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 })
 export class StockCardComponent implements OnInit {
 
-  @Input() title = '';
+  @Input() title = 'New Stock Card';
   @Input() subtitle = '';
 
   settings = true;
   showDelete = false;
   loading = false;
-  cardName = 'New Stock Card';
 
   stockCardForm: FormGroup;
   stocks: FormArray;
@@ -32,6 +31,12 @@ export class StockCardComponent implements OnInit {
     this.loading = true;
     this.settings = false;
     const form = this.stockCardForm.value;
+
+    this.title = form.cardName;
+  }
+
+  editCard(): void {
+    this.settings = true;
   }
 
   addStock(): void {
@@ -71,7 +76,7 @@ export class StockCardComponent implements OnInit {
     if (value === '') {
       value = 'New Stock Card';
     }
-    this.cardName = value;
+    this.title = value;
   }
 
 }
