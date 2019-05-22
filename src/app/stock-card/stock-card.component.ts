@@ -1,6 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
+import { StockRequestService } from '../stock-request.service';
+
 @Component({
   selector: 'app-stock-card',
   templateUrl: './stock-card.component.html',
@@ -8,17 +10,20 @@ import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 })
 export class StockCardComponent implements OnInit {
 
+  // Inputs
   @Input() title = 'New Stock Card';
   @Input() subtitle = '';
 
+  // State
   settings = true;
   showDelete = false;
   loading = false;
 
+  // Form
   stockCardForm: FormGroup;
   stocks: FormArray;
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private srr: StockRequestService) { }
 
   ngOnInit() {
     this.stockCardForm = this.fb.group({
@@ -33,6 +38,15 @@ export class StockCardComponent implements OnInit {
     const form = this.stockCardForm.value;
 
     this.title = form.cardName;
+    console.log(form.stocks);
+    this.requestStocks(form.stocks);
+  }
+
+  requestStocks(stocks: String[]) {
+    this.srr.getStocks(stocks)
+    .subscribe((data) => {
+      console.log(data);
+    });
   }
 
   editCard(): void {

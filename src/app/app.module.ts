@@ -9,6 +9,8 @@ import { environment } from '../environments/environment';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 
+import { HttpClientModule } from '@angular/common/http';
+
 import { MaterialsModule } from './materials/materials.module';
 import { AccountComponent } from './account/account.component';
 
@@ -29,7 +31,8 @@ import { StockCardComponent } from './stock-card/stock-card.component';
     FormsModule,
     ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebase),
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
