@@ -6,7 +6,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class StockRequestService {
 
-  baseUrl = 'localhost:3000';
+  baseUrl = 'http://localhost:3000';
 
   constructor(private http: HttpClient) { }
 
