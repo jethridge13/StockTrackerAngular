@@ -38,8 +38,7 @@ export class StockCardComponent implements OnInit {
     const form = this.stockCardForm.value;
 
     this.title = form.cardName;
-    console.log(form.stocks);
-    this.requestStocks(form.stocks);
+    this.requestStocks(form.stocks.map(s => s.symbol));
   }
 
   requestStocks(stocks: String[]) {

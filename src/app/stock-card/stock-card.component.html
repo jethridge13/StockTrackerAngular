@@ -13,6 +13,7 @@
 	<mat-card-header>
 		<mat-card-title>{{ title }}</mat-card-title>
 	</mat-card-header>
+
 	<form [formGroup]="stockCardForm" (submit)="createCard()">
 		<mat-list>
 			<mat-list-item>
@@ -20,19 +21,25 @@
 					<input matInput placeholder="Card Name" (keyup)="updateTitle($event)" formControlName="cardName">
 				</mat-form-field>
 			</mat-list-item>
-			<mat-list-item *ngFor="let s of stockCardForm.get('stocks').controls; let i = index">
-				<mat-form-field>
-					<input matInput placeholder="Stock Ticker Symbol" value="{{ s.symbol }}">
-				</mat-form-field>
-				<button mat-button type="button" (click)="handleDelete($event)" [attr.data-index]="i">Delete</button>
-			</mat-list-item>
+
+			<div formArrayName="stocks">
+				<mat-list-item *ngFor="let s of stockCardForm.get('stocks').controls; let i = index" [formGroupName]="i">
+					<mat-form-field>
+						<input matInput placeholder="Stock Ticker Symbol" value="{{ s.symbol }}" formControlName="symbol">
+					</mat-form-field>
+					<button mat-button type="button" (click)="handleDelete($event)" [attr.data-index]="i">Delete</button>
+				</mat-list-item>
+			</div>
+
 			<mat-list-item>
 				<button mat-stroked-button type="button" (click)="addLine()">Add Line</button>
 			</mat-list-item>
 		</mat-list>
+
 		<mat-card-actions>
 			<button mat-stroked-button class="create" type="submit">Create</button>
 			<button mat-stroked-button color="warn" class="delete" type="button">Delete</button>
 		</mat-card-actions>
 	</form>
+
 </mat-card>
