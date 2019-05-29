@@ -45,6 +45,7 @@ export class StockCardComponent implements OnInit {
     this.srr.getStocks(stocks)
     .subscribe((data) => {
       console.log(data);
+      this.loading = false;
     });
   }
 

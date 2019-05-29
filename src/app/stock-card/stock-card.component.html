@@ -1,4 +1,4 @@
-<mat-card *ngIf="!settings">
+<mat-card *ngIf="!settings && !loading">
 	<mat-card-header>
 		<mat-card-title>{{ title }}</mat-card-title>
 		<mat-card-subtitle>{{ subtitle }}</mat-card-subtitle>
@@ -9,7 +9,7 @@
 	</mat-card-actions>
 </mat-card>
 
-<mat-card *ngIf="settings">
+<mat-card *ngIf="settings && !loading">
 	<mat-card-header>
 		<mat-card-title>{{ title }}</mat-card-title>
 	</mat-card-header>
@@ -41,5 +41,8 @@
 			<button mat-stroked-button color="warn" class="delete" type="button">Delete</button>
 		</mat-card-actions>
 	</form>
+</mat-card>
 
+<mat-card *ngIf="loading">
+	<mat-spinner *ngIf="loading"></mat-spinner>
 </mat-card>
