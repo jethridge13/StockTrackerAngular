@@ -12,7 +12,6 @@ export class StockCardComponent implements OnInit {
 
   // Inputs
   @Input() title = 'New Stock Card';
-  @Input() subtitle = '';
 
   // State
   settings = true;
@@ -35,6 +34,10 @@ export class StockCardComponent implements OnInit {
   createCard(): void {
     this.loading = true;
     this.settings = false;
+    console.log(this.stockCardForm);
+    if (this.stockCardForm.value.cardName === '') {
+      this.stockCardForm.value.cardName = 'New Stock Card';
+    }
     const form = this.stockCardForm.value;
 
     this.title = form.cardName;
@@ -50,7 +53,11 @@ export class StockCardComponent implements OnInit {
   }
 
   editCard(): void {
+    if (this.stockCardForm.value.cardName === '') {
+      this.title = 'New Stock Card';
+    }
     this.settings = true;
+    console.log(this.stockCardForm);
   }
 
   addStock(): void {
